@@ -1,1 +1,1 @@
-# bulk-RNAseq
+# bulk-RNAseq Notes
