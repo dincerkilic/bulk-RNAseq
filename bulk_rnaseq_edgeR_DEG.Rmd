@@ -135,19 +135,6 @@ keep <- filterByExpr(y, design)
 ```
 
 # 2.8 Normalization
-# 2.8.1 Normalization is only necessary for sample-specific effects
-edgeR is concerned with differential expression analysis rather than with the quantification of expression levels. It is concerned with relative changes in expression levels between conditions, but not directly with estimating absolute expression levels. This greatly simplifies the technical influences that need to be taken into account, because any technical factor that is unrelated to the experimental conditions should cancel out of any differential expression analysis. For example, read counts can generally be expected to be proportional to length as well as to expression for any transcript, but edgeR does not generally need to adjust for gene length because gene length has the same relative influence on the read counts for each RNA sample. For this reason, normalization issues arise only to the extent that technical factors have sample-specific effects.
-
-# 2.8.2 Sequencing depth
-The most obvious technical factor that affects the read counts, other than gene expression levels, is the sequencing depth of each RNA sample. edgeR adjusts any differential expression analysis for varying sequencing depths as represented by differing library sizes. This is part of the basic modeling procedure and flows automatically into fold-change or p-value calculations. It is always present, and doesn’t require any user intervention.
-
-# 2.8.3 Effective library sizes
-The second most important technical influence on differential expression is one that is less obvious. RNA-seq provides a measure of the relative abundance of each gene in each RNA sample, but does not provide any measure of the total RNA output on a per-cell basis. In other words, RNA-seq measure relative expression rather than absolute expression. This becomes important for differential expression analyses when a small number of genes are very highly expressed in some samples but not in others. If a small proportion of highly expressed genes consume a substantial proportion of the total library size for a particular sample, this will cause the remaining genes to be under-sampled for that sample. Unless this effect is adjusted for, the remaining genes may falsely appear to be down-regulated in that sample
-[41].
-
-The normLibSizes function normalizes the library sizes in such a way to minimize the log-fold changes between the samples for most genes. The default method for computing these scale factors uses a trimmed mean of M-values (TMM) between each pair of samples [41]. We call the product of the original library size and the scaling factor the effective library size, i.e., the normalized library size. The effective library size replaces the original library size in all downsteam analyses.
-
-TMM is recommended for most RNA-Seq data where the majority (more than half) of the genes are believed not differentially expressed between any pair of the samples. If y is a DGEList object, then the following commands perform the TMM normalization and display the normalization factors.
 
 ```{r, eval=FALSE}
 y <- normLibSizes(y)
@@ -161,13 +148,8 @@ Sample3 1    11959792 1.32
 Sample4 2    7460595 0.91
 Sample5 2    6714958 0.83
 ```
-
-The set of all normalization factors for a DGEList multiply to unity, ensuring that the geometric mean of the effective library sizes is the same as the geometric mean of the original library sizes. A normalization factor below one indicates that a small number of high count genes are monopolizing the sequencing, causing the counts for other genes to be lower than would be usual given the library size. As a result, the library size will be scaled down, analogous to scaling the counts upwards in that library. Conversely, a factor above one scales up the library size, analogous to downscaling the counts.
-
 # 2.9 Negative binomial models
 
-Watch **[this](https://www.youtube.com/watch?time_continue=441&v=lJw6Ku_jQkM&embeds_referring_euri=https%3A%2F%2Fwww.google.com%2Fsearch%3Fq%3DNegative%2Bbinomial%2Bmodels%2Brnaseq%26sca_esv%3D598740777%26sxsrf%3DACQVn091hnV__QsRaEFJg8f9UZDK_WCcjg%253A170&source_ve_path=MjM4NTE&feature=emb_title).**  
- 
 # 2.11.3 Testing for DE genes
 
 As a brief example, consider a situation in which are three treatment groups, each with two replicates, and the researcher wants to make pairwise comparisons between them. A QL model representing the study design can be fitted to the data with commands such as:
