@@ -135,7 +135,6 @@ keep <- filterByExpr(y, design)
 ```
 
 # 2.8 Normalization
-
 ```{r, eval=FALSE}
 y <- normLibSizes(y)
 y$samples
@@ -148,10 +147,57 @@ Sample3 1    11959792 1.32
 Sample4 2    7460595 0.91
 Sample5 2    6714958 0.83
 ```
+
 # 2.9 Negative binomial models
+# 2.10 The classic edgeR pipeline: pairwise comparisons between two or more groups
+# 2.10.1 Estimating dispersions
+To estimate common dispersion and tagwise dispersions in one run (recommended):
+
+```{r, eval=FALSE}
+y <- estimateDisp(y)
+```
+
+Alternatively, to estimate common dispersion:
+
+```{r, eval=FALSE}
+y <- estimateCommonDisp(y)
+```
+
+Then to estimate tagwise dispersions:
+
+```{r, eval=FALSE}
+ y <- estimateTagwiseDisp(y)
+```
+
+```{r, eval=FALSE}
+et <- exactTest(y)
+topTags(et)
+```
+
+# 2.11 More complex experiments (glm functionality)
+# 2.11.2 Estimating dispersions
+```{r, eval=FALSE}
+y <- estimateDisp(y, design)
+```
+
+Alternatively, one can use the following calling sequence to estimate them one by one. To
+estimate common dispersion:
+
+```{r, eval=FALSE}
+y <- estimateGLMCommonDisp(y, design)
+```
+
+To estimate trended dispersions:
+```{r, eval=FALSE}
+y <- estimateGLMTrendedDisp(y, design)
+```
+
+To estimate tagwise dispersions:
+```{r, eval=FALSE}
+y <- estimateGLMTagwiseDisp(y, design)
+```
 
 # 2.11.3 Testing for DE genes
-
 As a brief example, consider a situation in which are three treatment groups, each with two replicates, and the researcher wants to make pairwise comparisons between them. A QL model representing the study design can be fitted to the data with commands such as:
 
 ```{r, eval=FALSE}
@@ -181,8 +227,6 @@ To compare 3 vs 2:
 ```{r, eval=FALSE}
 qlf.3vs2 <- glmQLFTest(fit, contrast=c(0,-1,1))
 ```
-
-
 
 To find genes different between any of the three groups:
 
