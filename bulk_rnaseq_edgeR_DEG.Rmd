@@ -150,7 +150,7 @@ Sample5 2    6714958 0.83
 
 # 2.9 Negative binomial models
 # 2.10 The classic edgeR pipeline: pairwise comparisons between two or more groups
-# 2.10.1 Estimating dispersions
+## 2.10.1 Estimating dispersions
 To estimate common dispersion and tagwise dispersions in one run (recommended):
 
 ```{r, eval=FALSE}
@@ -175,7 +175,7 @@ topTags(et)
 ```
 
 # 2.11 More complex experiments (glm functionality)
-# 2.11.2 Estimating dispersions
+## 2.11.2 Estimating dispersions
 ```{r, eval=FALSE}
 y <- estimateDisp(y, design)
 ```
@@ -197,7 +197,7 @@ To estimate tagwise dispersions:
 y <- estimateGLMTagwiseDisp(y, design)
 ```
 
-# 2.11.3 Testing for DE genes
+## 2.11.3 Testing for DE genes
 As a brief example, consider a situation in which are three treatment groups, each with two replicates, and the researcher wants to make pairwise comparisons between them. A QL model representing the study design can be fitted to the data with commands such as:
 
 ```{r, eval=FALSE}
