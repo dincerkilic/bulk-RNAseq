@@ -149,6 +149,8 @@ Sample5 2    6714958 0.83
 ```
 
 # 2.9 Negative binomial models
+Watch **[this](https://www.youtube.com/watch?v=lJw6Ku_jQkM)**.
+
 # 2.10 The classic edgeR pipeline: pairwise comparisons between two or more groups
 ## 2.10.1 Estimating dispersions
 To estimate common dispersion and tagwise dispersions in one run (recommended):
